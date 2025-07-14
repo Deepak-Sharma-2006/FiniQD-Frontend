@@ -1,0 +1,392 @@
+.topic-details-container {
+  max-width: fit-content;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* Center content vertically and horizontally */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Universal content centering for consistency */
+.topic-header,
+.topic-content,
+.topic-main-content,
+.topic-image,
+.additional-images,
+.video-section,
+.topic-quiz {
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: left;
+}
+
+.topic-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.series-title {
+  color: var(--text-color);
+  /* Use theme text color for visibility in both modes */
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.topic-header h1 {
+  color: var(--text-color);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0.5rem 0 1rem;
+  border-bottom: 2px solid var(--button-primary-bg-color);
+  padding-bottom: 0.3rem;
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+}
+
+.topic-summary {
+  background: var(--card-bg-color);
+  color: var(--card-text-color);
+  padding: 1.2rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+}
+
+.topic-summary h3 {
+  color: var(--text-color);
+  margin: 0 0 0.8rem;
+}
+
+.topic-summary p {
+  color: #ffffff;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.topic-main-content {
+  line-height: 1.8;
+  color: var(--text-color);
+  white-space: pre-wrap;
+  margin: 2rem 0;
+}
+
+.topic-main-content ul {
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+}
+
+.topic-main-content li {
+  margin-bottom: 0.6rem;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.topic-image {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.topic-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  max-height: 300px;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+}
+
+.additional-images {
+  margin-top: 2rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.image-grid img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.video-section {
+  margin-top: 2rem;
+}
+
+.video-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 640px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.1);
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 360px;
+  border: none;
+}
+
+.video-container a {
+  text-decoration: none;
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.video-container a:hover {
+  color: #004ba0;
+}
+
+.topic-quiz {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 2px solid #eee;
+}
+
+.quiz-question {
+  margin-bottom: 1.5rem;
+}
+
+.quiz-question h4 {
+  color: #ffffff;
+  margin: 0 0 0.8rem 0;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  color: var(--text-color);
+  background: var(--button-bg-color);
+}
+
+.quiz-option:hover {
+  background: var(--button-hover-bg-color);
+  color: var(--button-text-color);
+}
+
+.quiz-option input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: #666;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.back-link:hover {
+  color: #222;
+  border-color: #222;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.quiz-option.correct {
+  background-color: var(--quiz-correct-bg, rgba(76, 175, 80, 0.15));
+  border: 2px solid var(--quiz-correct-border, #4caf50);
+  color: var(--quiz-correct-text, var(--text-color));
+  box-shadow: 0 0 0 2px var(--quiz-correct-shadow, #4caf50);
+}
+
+.quiz-option.wrong {
+  background-color: var(--quiz-wrong-bg, rgba(244, 67, 54, 0.15));
+  border: 2px solid var(--quiz-wrong-border, #f44336);
+  color: var(--quiz-wrong-text, var(--text-color));
+  box-shadow: 0 0 0 2px var(--quiz-wrong-shadow, #f44336);
+}
+
+.quiz-question.unanswered-highlight {
+  box-shadow: 0 0 0 2px var(--quiz-unanswered-shadow, #ff9800);
+  border-radius: 8px;
+  background: var(--quiz-unanswered-bg, rgba(255, 152, 0, 0.10));
+}
+
+.feedback-icon {
+  font-size: 1.2rem;
+  margin-left: 8px;
+  color: var(--quiz-correct-border, #4caf50);
+}
+
+.submit-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--button-primary-bg-color);
+  color: var(--button-primary-text-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-text-color);
+}
+
+.quiz-option.wrong {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.quiz-score-result {
+  margin-top: 16px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #00e676;
+}
+
+.topic-navigation-buttons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.nav-button {
+  background-color: var(--button-primary-bg-color);
+  color: var(--button-primary-text-color);
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+  background-color: var(--button-hover-bg-color);
+  color: var(--button-text-color);
+}
+
+/* Divider before comment section */
+.comment-divider {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  border: none;
+  border-top: 1px solid var(--button-hover-bg-color);
+}
+
+/* Comment section title */
+.discussion-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 25px;
+  padding-left: 5px;
+}
+
+/* Theme-aware SweetAlert styles */
+.swal-confirm-button {
+  background: var(--button-primary-bg-color) !important;
+  color: var(--button-primary-text-color) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px var(--card-shadow-color) !important;
+  transition: opacity 0.2s !important;
+}
+
+.swal-confirm-button:hover {
+  opacity: 0.9 !important;
+}
+
+.swal-cancel-button {
+  background: var(--button-bg-color) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 2px 8px var(--card-shadow-color) !important;
+  transition: opacity 0.2s !important;
+}
+
+.swal-cancel-button:hover {
+  opacity: 0.9 !important;
+}
+
+/* Theme-aware SweetAlert2 popup */
+.swal2-popup {
+  background: var(--card-bg-color) !important;
+  color: var(--text-color) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 24px var(--card-shadow-color, rgba(25, 118, 210, 0.18)) !important;
+  border: 1px solid var(--border-color, #e0e0e0) !important;
+}
+
+.swal2-title,
+.swal2-html-container {
+  color: var(--text-color) !important;
+}
+
+.swal2-icon {
+  background: var(--card-bg-color) !important;
+  color: inherit !important;
+  border-color: var(--border-color, #e0e0e0) !important;
+}
+
+/* ✅ Force visibility of SweetAlert2 success tick */
+.swal2-icon.swal2-success {
+  border-color: var(--quiz-correct-border) !important;
+  color: var(--quiz-correct-border) !important;
+}
+
+/* ✅ Fix the tick lines */
+.swal2-success-line-long,
+.swal2-success-line-tip {
+  background-color: var(--quiz-correct-border) !important;
+}
+
+/* ✅ Fix the ring color */
+.swal2-success-ring {
+  border: 4px solid var(--quiz-correct-border) !important;
+}
+
+/* ✅ Ensure ::before and ::after ticks are not hidden */
+.swal2-icon.swal2-success::before,
+.swal2-icon.swal2-success::after {
+  background-color: var(--quiz-correct-border) !important;
+  display: block !important;
+  content: "" !important;
+}
+
+/* ✅ Optional: make animation smoother if still not visible */
+.swal2-icon.swal2-success .swal2-success-line-tip,
+.swal2-icon.swal2-success .swal2-success-line-long {
+  transition: background-color 0.3s ease !important;
+}

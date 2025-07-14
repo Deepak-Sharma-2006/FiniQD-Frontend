@@ -1,0 +1,231 @@
+/* Google Sign-In Button Styles */
+.googleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 0;
+  background: var(--button-bg-color);
+  color: var(--text-color);
+  border: 1.5px solid var(--input-border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.googleButton:hover {
+  background: var(--button-hover-bg-color);
+}
+
+.googleLogo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+
+
+.googleText {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Dark mode override for button only (logo stays unchanged) */
+[data-theme="dark"] .googleButton {
+  background: #23272f;
+  color: #f1f1f1;
+  border-color: #555;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--text-color);
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--background-color);
+}
+
+.leftPanel {
+  width: 40%;
+  background-color: var(--button-bg-color);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 8px 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.rightPanel {
+  width: 60%;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.bgImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.overlay {
+  background: linear-gradient(120deg, rgba(30, 30, 111, 0.6), rgba(140, 0, 200, 0.7));
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.textContainer {
+  position: relative;
+  z-index: 3;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px var(--card-shadow-color);
+  padding: 32px 28px;
+  border: 1.5px solid var(--card-hover-shadow-color);
+  transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+}
+
+.icon {
+  font-size: 48px;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  padding: 12px 16px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1.5px solid var(--button-hover-bg-color);
+  font-size: 16px;
+  background: var(--button-bg-color);
+  color: var(--text-color);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  border: 2px solid #ff007f;
+  box-shadow: 0 0 0 2px rgba(255, 0, 127, 0.15);
+}
+
+.button {
+  padding: 12px;
+  background-color: #ff007f;
+  color: var(--button-text-color);
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.extra {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 10px;
+  color: var(--text-color);
+}
+
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #ff007f;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .link {
+  color: #ff90d0;
+}
+
+.logo {
+  font-size: 18px;
+  margin-bottom: 40px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.toggleText {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.toggleButton {
+  background: none;
+  color: #ff007f;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: underline;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: color 0.2s;
+}
+
+[data-theme="dark"] .toggleButton {
+  color: #ff90d0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.32);
+}
+
+.welcomeText {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.description {
+  max-width: 400px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.success {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.error {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #f8d7da;
+  color: #721c24;
+  /* Default error text */
+}
+
+@media (max-width: 900px) {
+  .form {
+    padding: 18px 8px;
+  }
+}

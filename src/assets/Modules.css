@@ -1,0 +1,74 @@
+:root {
+  --card-bg-color: #ffffff;
+  /* Light mode card background */
+  --card-text-color: #000000;
+  /* Light mode card text */
+  --button-bg-color: #2b6cb0;
+  /* Button background */
+  --button-text-color: #ffffff;
+  /* Button text */
+  --button-hover-bg-color: #2c5282;
+  /* Button hover background */
+}
+
+body.dark-mode {
+  --card-bg-color: #1a1a1a;
+  /* Dark mode card background */
+  --card-text-color: #ffffff;
+  /* Dark mode card text */
+}
+
+.modules-three-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 2rem;
+  margin: 0;
+}
+
+.module-card-large {
+  background: var(--card-bg-color);
+  color: var(--card-text-color);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 30%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.module-card-large:hover {
+  transform: translateY(-4px);
+}
+
+.module-card-large h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.module-card-large .summary {
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.view-btn {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  /* Adjust the space above the button */
+  margin-bottom: 1rem;
+  /* Optional if you want extra space below */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.view-btn:hover {
+  background-color: var(--button-hover-bg-color);
+}
