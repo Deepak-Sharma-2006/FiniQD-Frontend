@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { API } from "../api"; // ✅ Centralized API import
 
 function ModuleDetails() {
   const { level, topicId } = useParams();
@@ -12,8 +13,9 @@ function ModuleDetails() {
     const fetchTopicDetails = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:2100/api/levels/${level}/topics/${topicId}`);
+        const res = await axios.get(`${API}/api/levels/${level}/topics/${topicId}`);
         setTopic(res.data);
+        setError(null);
       } catch (err) {
         console.error("Failed to fetch topic details:", err);
         setError("Failed to load topic details");
@@ -25,20 +27,36 @@ function ModuleDetails() {
     fetchTopicDetails();
   }, [level, topicId]);
 
-  if (loading) return <div>Loading topic details...</div>;
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
+  if (loading) return <div style={{ padding: "1rem" }}>Loading topic details...</div>;
+  if (error) return <div style={{ color: "red", padding: "1rem" }}>{error}</div>;
+  if (!topic?.levels?.[0]?.topics?.[0]) {
+    return <div style={{ padding: "1rem" }}>No topic data found.</div>;
+  }
 
-  // Example assumes data structure as you described:
-  // { seriesTitle, levels: [{ topics: [{ title, summary, content, ... }] }] }
   const topicDetails = topic.levels[0].topics[0];
 
   return (
-    <div>
+    <div style={{ padding: "2rem" }}>
       <h1>{topic.seriesTitle}</h1>
-      <h2>{topicDetails.title}</h2>
-      <p>{topicDetails.summary}</p>
-      <div className="whitespace-pre-wrap">{topicDetails.content}</div>
-      {/* Add images, quiz, etc. if desired */}
+      <h2 style={{ marginTop: "1rem" }}>{topicDetails.title}</h2>
+      <p style={{ fontStyle: "italic", color: "#666" }}>{topicDetails.summary}</p>
+      <div
+        className="whitespace-pre-wrap"
+        style={{ marginTop: "1rem", lineHeight: "1.6" }}
+      >
+        {topicDetails.content}
+      </div>
+
+      {/* Optional Enhancements */}
+      {/* 
+      {topicDetails.image && (
+        <img
+          src={`${API}/${topicDetails.image}`}
+          alt={topicDetails.title}
+          style={{ maxWidth: "100%", marginTop: "1rem" }}
+        />
+      )} 
+      */}
     </div>
   );
 }

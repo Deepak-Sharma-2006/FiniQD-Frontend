@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
+import { API } from "../api"; // ✅ import the backend base URL
 import "./CommentSection.css";
 
 const CommentSection = ({ topicId, userEmail }) => {
@@ -24,7 +25,7 @@ const CommentSection = ({ topicId, userEmail }) => {
 
     const fetchComments = async () => {
         try {
-            const res = await axios.get(`http://localhost:2100/api/comments/${topicId}`);
+            const res = await axios.get(`${API}/api/comments/${topicId}`);
             setComments(res.data);
         } catch (err) {
             console.error("Error fetching comments:", err);
@@ -36,7 +37,7 @@ const CommentSection = ({ topicId, userEmail }) => {
         if (!text.trim()) return;
         setLoading(true);
         try {
-            await axios.post("http://localhost:2100/api/comments", {
+            await axios.post(`${API}/api/comments`, {
                 topicId,
                 userEmail,
                 text,
@@ -54,7 +55,7 @@ const CommentSection = ({ topicId, userEmail }) => {
 
     const handleVote = async (commentId, type) => {
         try {
-            await axios.post(`http://localhost:2100/api/comments/vote/${commentId}`, {
+            await axios.post(`${API}/api/comments/vote/${commentId}`, {
                 type,
                 userEmail,
             });
@@ -78,16 +79,13 @@ const CommentSection = ({ topicId, userEmail }) => {
 
     const countNestedReplies = (id, all) => {
         let count = 0;
-        const map = new Map(all.map(c => [c._id, c]));
         const queue = [id];
-
         while (queue.length) {
             const current = queue.shift();
             const children = all.filter(c => String(c.parentId) === String(current));
             count += children.length;
             queue.push(...children.map(c => c._id));
         }
-
         return count;
     };
 
@@ -115,12 +113,7 @@ const CommentSection = ({ topicId, userEmail }) => {
                     if (root) replyCounts[root] = (replyCounts[root] || 0) + 1;
                 }
             });
-
-            return [...topLevel].sort((a, b) => {
-                const countA = replyCounts[a._id] || 0;
-                const countB = replyCounts[b._id] || 0;
-                return countB - countA;
-            });
+            return [...topLevel].sort((a, b) => (replyCounts[b._id] || 0) - (replyCounts[a._id] || 0));
         }
 
         return [...topLevel].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -161,10 +154,7 @@ const CommentSection = ({ topicId, userEmail }) => {
                                 <button className="reply-btn" onClick={() => setReplyTo(reply._id)}>Reply</button>
                             </div>
                             {comments.some(c => String(c.parentId) === String(reply._id)) && (
-                                <button
-                                    className="show-more-btn"
-                                    onClick={() => toggleReplyVisibility(reply._id)}
-                                >
+                                <button className="show-more-btn" onClick={() => toggleReplyVisibility(reply._id)}>
                                     {expandedReplies[reply._id] ? "Hide" : "Show"} replies ({countNestedReplies(reply._id, comments)})
                                 </button>
                             )}
@@ -205,10 +195,7 @@ const CommentSection = ({ topicId, userEmail }) => {
                             <button className="reply-btn" onClick={() => setReplyTo(comment._id)}>Reply</button>
                         </div>
                         {comments.some(c => String(c.parentId) === String(comment._id)) && (
-                            <button
-                                className="show-more-btn"
-                                onClick={() => toggleReplyVisibility(comment._id)}
-                            >
+                            <button className="show-more-btn" onClick={() => toggleReplyVisibility(comment._id)}>
                                 {expandedReplies[comment._id] ? "Hide" : "Show"} replies ({replyCount})
                             </button>
                         )}

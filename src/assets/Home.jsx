@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext"; // Importing Auth Context
-import Swal from "sweetalert2"; // ✅ SweetAlert2 import
+import { useAuth } from "./AuthContext";
+import Swal from "sweetalert2";
 import "./Home.css";
-import logo from "../assets/finq-logo.png"; // Import your logo image
+import logo from "../assets/finq-logo.png";
+import { API } from "../api"; // ✅ Use API constant
 
 function Home() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth(); // ✅ Now includes logout
-  const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown toggle
+  const { user, logout } = useAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const handleLogout = () => {
     const styles = getComputedStyle(document.body);
     const background = styles.getPropertyValue("--popup-bg-color").trim();
@@ -54,7 +56,6 @@ function Home() {
     });
   };
 
-
   const handleProfile = () => {
     navigate("/profile");
   };
@@ -62,7 +63,7 @@ function Home() {
   const getImageUrl = (pfp) => {
     if (!pfp) return "https://cdn-icons-png.flaticon.com/512/3177/3177440.png";
     if (pfp.startsWith("http")) return pfp;
-    return `http://localhost:2100${pfp}`;
+    return `${API}${pfp}`; // ✅ Now uses environment-safe base URL
   };
 
   return (

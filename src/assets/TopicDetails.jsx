@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API } from "../api"; // adjust path if needed
 import CommentSection from "./CommentSection";
 import Swal from "sweetalert2";
 import "./TopicDetails.css";
@@ -48,7 +49,8 @@ const TopicDetails = () => {
         setScore(null);
 
         const levelNumber = levelId.replace(/[^0-9]/g, "");
-        const res = await axios.get(`http://localhost:2100/api/levels/${levelNumber}/topics/${topicId}`);
+        const res = await axios.get(`${API}/api/levels/${levelNumber}/topics/${topicId}`);
+
         setTopic(res.data);
         window.scrollTo(0, 0);
 
@@ -126,7 +128,8 @@ const TopicDetails = () => {
 
 
     try {
-      await axios.post("http://localhost:2100/api/quiz-scores/submit", {
+      await axios.post(`${API}/api/quiz-scores/submit`, {
+
         userEmail,
         levelId: numericLevel,
         topicId: topic.customId,

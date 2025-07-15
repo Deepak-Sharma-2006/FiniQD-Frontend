@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { API } from "../api"; // ✅ Use environment-based backend URL
 import "./FloatingNotes.css";
 
 const FloatingNotes = () => {
@@ -26,12 +27,12 @@ const FloatingNotes = () => {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:2100/api/notes", {
+      const res = await axios.get(`${API}/api/notes`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSavedNotes(res.data || []);
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response?.status === 401) {
         setError("Session expired. Please log in again.");
         localStorage.removeItem("token");
       } else {
@@ -47,7 +48,7 @@ const FloatingNotes = () => {
       return;
     }
     if (!note.trim()) {
-      setVisible(false); // Close popup if empty
+      setVisible(false);
       setNote("");
       setError("");
       return;
@@ -55,7 +56,7 @@ const FloatingNotes = () => {
 
     try {
       await axios.post(
-        "http://localhost:2100/api/notes",
+        `${API}/api/notes`,
         { content: note },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -64,7 +65,7 @@ const FloatingNotes = () => {
       fetchNotes();
       setError("");
     } catch (err) {
-      if (err.response && err.response.status === 401) {
+      if (err.response?.status === 401) {
         setError("Session expired. Please log in again.");
         localStorage.removeItem("token");
       } else {
@@ -76,7 +77,7 @@ const FloatingNotes = () => {
 
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:2100/api/notes/${id}`, {
+      await axios.delete(`${API}/api/notes/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchNotes();
@@ -93,7 +94,7 @@ const FloatingNotes = () => {
   };
 
   const startDrag = (e) => {
-    dragging.current = false; // Reset dragging state
+    dragging.current = false;
     dragOffset.current = {
       x: e.clientX - iconRef.current.getBoundingClientRect().left,
       y: e.clientY - iconRef.current.getBoundingClientRect().top,
@@ -102,7 +103,6 @@ const FloatingNotes = () => {
     document.addEventListener("mouseup", stopDrag);
   };
 
-  // Helper to check if drag actually started (move threshold)
   const handleDragStartCheck = (e) => {
     const dx = Math.abs(
       e.clientX - (iconRef.current.getBoundingClientRect().left + dragOffset.current.x)
@@ -111,7 +111,6 @@ const FloatingNotes = () => {
       e.clientY - (iconRef.current.getBoundingClientRect().top + dragOffset.current.y)
     );
     if (dx > 3 || dy > 3) {
-      // threshold in px
       dragging.current = true;
       document.removeEventListener("mousemove", handleDragStartCheck);
       document.addEventListener("mousemove", handleDrag);
@@ -126,11 +125,10 @@ const FloatingNotes = () => {
     iconRef.current.style.top = `${y}px`;
   };
 
-  const stopDrag = (e) => {
+  const stopDrag = () => {
     document.removeEventListener("mousemove", handleDragStartCheck);
     document.removeEventListener("mousemove", handleDrag);
     document.removeEventListener("mouseup", stopDrag);
-    // Only reset dragging after mouseup, not on click
     setTimeout(() => {
       dragging.current = false;
     }, 0);
@@ -173,11 +171,8 @@ const FloatingNotes = () => {
     setNote(content);
   };
 
-  // Theme-aware background for notes icon
   const theme = document.documentElement.getAttribute("data-theme") || "light";
-  const iconBg = theme === "dark"
-    ? "rgba(40,40,40,0.95)"
-    : "rgba(255,255,255,0.95)";
+  const iconBg = theme === "dark" ? "rgba(40,40,40,0.95)" : "rgba(255,255,255,0.95)";
   const iconBorder = theme === "dark" ? "1px solid #444" : "1px solid #eee";
   const iconBoxShadow = theme === "dark"
     ? "0 2px 8px rgba(0,0,0,0.32)"
@@ -194,20 +189,20 @@ const FloatingNotes = () => {
         }}
         style={{
           position: "fixed",
-          top: "70px", // Adjust this value to be below the navbar
-          left: "30px", // Default left position
+          top: "70px",
+          left: "30px",
           zIndex: 2000,
           cursor: "grab",
-          background: iconBg, // Theme-aware background
+          background: iconBg,
           borderRadius: "50%",
-          boxShadow: iconBoxShadow, // Theme-aware shadow
+          boxShadow: iconBoxShadow,
           width: "56px",
           height: "56px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "2rem",
-          border: iconBorder, // Theme-aware border
+          border: iconBorder,
         }}
       >
         📝

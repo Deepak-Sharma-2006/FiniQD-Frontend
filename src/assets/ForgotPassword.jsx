@@ -3,17 +3,18 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './ForgotPassword.module.css';
+import { API } from '../api'; // ✅ Import API from environment config
 
 function ForgotPassword({ onClose }) {
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [step, setStep] = useState(1); // 1 for email, 2 for OTP and new password
+    const [step, setStep] = useState(1); // Step 1: email, Step 2: OTP + new password
 
     const handleSendOTP = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:2100/api/auth/send-otp', { email });
+            await axios.post(`${API}/api/auth/send-otp`, { email });
             toast.success('OTP sent to your email!');
             setStep(2);
         } catch (error) {
@@ -24,7 +25,7 @@ function ForgotPassword({ onClose }) {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:2100/api/auth/verify-otp', {
+            await axios.post(`${API}/api/auth/verify-otp`, {
                 email,
                 otp,
                 newPassword,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API } from "../api"; // adjust path if file is in a different folder
 import { useParams, Link } from "react-router-dom";
 import "./Topics.css";
 
@@ -15,7 +16,7 @@ function Topics() {
         setLoading(true);
         const levelNumber = level.split("-")[1];
         const res = await axios.get(
-          `http://localhost:2100/api/levels/${levelNumber}/topics`
+          `${API}/api/levels/${levelNumber}/topics`
         );
         setTopics(res.data);
       } catch (err) {
@@ -34,7 +35,8 @@ function Topics() {
     if (!imagePath) return null;
     if (imagePath.startsWith("http://") || imagePath.startsWith("https://"))
       return imagePath;
-    return `http://localhost:2100/${imagePath.replace(/^\/+/, "")}`;
+    return `${API}/${imagePath.replace(/^\/+/, "")}`;
+
   };
 
   if (loading) return <div className="topics-loading">Loading...</div>;

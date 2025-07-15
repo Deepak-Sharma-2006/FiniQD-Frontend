@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import styles from './Login.module.css';
 import { useAuth } from './AuthContext';
 import ForgotPassword from './ForgotPassword';
+import { API } from '../api'; // ✅ API import
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,9 +33,9 @@ function Login() {
     setMessage('');
     setError('');
     try {
-      const res = await axios.post('http://localhost:2100/api/auth/login', loginData);
-      login(res.data.user, res.data.token); // Pass token to context
-      navigate('/home');    // ✅ Redirect to home
+      const res = await axios.post(`${API}/api/auth/login`, loginData);
+      login(res.data.user, res.data.token);
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
@@ -45,9 +46,9 @@ function Login() {
     setMessage('');
     setError('');
     try {
-      const res = await axios.post('http://localhost:2100/api/auth/register', registerData);
+      const res = await axios.post(`${API}/api/auth/register`, registerData);
       setMessage(res.data.message);
-      login(res.data.user, res.data.token); // Pass token to context
+      login(res.data.user, res.data.token);
       setIsLogin(true);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -56,11 +57,11 @@ function Login() {
 
   const handleGoogleLogin = async (credentialResponse) => {
     try {
-      const res = await axios.post('http://localhost:2100/api/auth/google-login', {
+      const res = await axios.post(`${API}/api/auth/google-login`, {
         token: credentialResponse.credential
       });
-      login(res.data.user, res.data.token); // Pass token to context
-      navigate('/home');    // ✅ Redirect
+      login(res.data.user, res.data.token);
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Google login failed');
     }
@@ -73,14 +74,32 @@ function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.leftPanel}>
-        {/* <div className={styles.logo}>TEMPLATE DSGN</div> */}
-        <form onSubmit={isLogin ? handleLoginSubmit : handleRegisterSubmit} className={styles.form}>
-          <div className={styles.icon}><span role="img" aria-label="user">👤</span></div>
+        <form
+          onSubmit={isLogin ? handleLoginSubmit : handleRegisterSubmit}
+          className={styles.form}
+        >
+          <div className={styles.icon}>
+            <span role="img" aria-label="user">👤</span>
+          </div>
 
           {isLogin ? (
             <>
-              <input type="email" name="email" placeholder="Email" value={loginData.email} onChange={handleLoginChange} className={styles.input} />
-              <input type="password" name="password" placeholder="Password" value={loginData.password} onChange={handleLoginChange} className={styles.input} />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={loginData.email}
+                onChange={handleLoginChange}
+                className={styles.input}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={loginData.password}
+                onChange={handleLoginChange}
+                className={styles.input}
+              />
               <button type="submit" className={styles.button}>LOGIN</button>
               <div className={styles.extra}>
                 <label><input type="checkbox" /> Remember me</label>
@@ -95,11 +114,43 @@ function Login() {
             </>
           ) : (
             <>
-              <input type="text" name="name" placeholder="Full Name" value={registerData.name} onChange={handleRegisterChange} className={styles.input} />
-              <input type="email" name="email" placeholder="Email" value={registerData.email} onChange={handleRegisterChange} className={styles.input} />
-              <input type="password" name="password" placeholder="Password" value={registerData.password} onChange={handleRegisterChange} className={styles.input} />
-              <input type="date" name="dob" value={registerData.dob} onChange={handleRegisterChange} className={styles.input} />
-              <select name="profession" value={registerData.profession} onChange={handleRegisterChange} className={styles.input}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={registerData.name}
+                onChange={handleRegisterChange}
+                className={styles.input}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={registerData.email}
+                onChange={handleRegisterChange}
+                className={styles.input}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={registerData.password}
+                onChange={handleRegisterChange}
+                className={styles.input}
+              />
+              <input
+                type="date"
+                name="dob"
+                value={registerData.dob}
+                onChange={handleRegisterChange}
+                className={styles.input}
+              />
+              <select
+                name="profession"
+                value={registerData.profession}
+                onChange={handleRegisterChange}
+                className={styles.input}
+              >
                 <option value="">Select Profession</option>
                 <option value="student">Student</option>
                 <option value="business">Business</option>
@@ -115,14 +166,21 @@ function Login() {
 
         <div className={styles.toggleText}>
           {isLogin ? 'Not a member?' : 'Already a member?'}{' '}
-          <button onClick={() => { setIsLogin(!isLogin); setError(''); setMessage(''); }} className={styles.toggleButton}>
+          <button
+            onClick={() => { setIsLogin(!isLogin); setError(''); setMessage(''); }}
+            className={styles.toggleButton}
+          >
             {isLogin ? 'Sign up now' : 'Sign in'}
           </button>
         </div>
       </div>
 
       <div className={styles.rightPanel}>
-        <img src="http://localhost:2100/uploads/WhatsApp%20Image%202025-06-29%20at%2021.51.42.jpeg" alt="Login" className={styles.bgImage} />
+        <img
+          src={`${API}/uploads/WhatsApp%20Image%202025-06-29%20at%2021.51.42.jpeg`}
+          alt="Login"
+          className={styles.bgImage}
+        />
         <div className={styles.overlay} />
         <div className={styles.textContainer}>
           {/* All text content removed as requested */}
